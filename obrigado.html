@@ -1,15 +1,60 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Obrigado!</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Biblioteca de confetes -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
-<body class="bg-gradient-to-br from-purple-900 to-indigo-900 flex items-center justify-center min-h-screen">
-  <div class="bg-purple-950 bg-opacity-60 text-white p-10 rounded-xl shadow-xl text-center max-w-md">
-    <h1 class="text-3xl font-bold text-purple-400 mb-4">🎉 Obrigado pelo envio!</h1>
-    <p class="text-lg">Recebemos suas informações com sucesso.</p>
-    <p class="mt-2 text-sm text-purple-300">Entraremos em contato pelo WhatsApp em breve.</p>
+<body class="bg-gradient-to-br from-purple-900 to-indigo-900 flex items-center justify-center min-h-screen p-4 text-white">
+
+  <div
+    class="bg-purple-950 bg-opacity-60 p-6 sm:p-10 rounded-xl shadow-xl text-center max-w-md w-full relative z-10"
+  >
+    <h1 class="text-2xl sm:text-3xl font-bold text-purple-300 mb-4">
+      OBRIGADO PELO ENVIO ;)
+    </h1>
+
+    <p class="text-sm sm:text-base text-white leading-snug">
+      RECEBEMOS SUAS INFORMAÇÕES COM SUCESSO, A EQUIPE ENTRARÁ EM CONTATO EM BREVE.
+    </p>
   </div>
+
+  <script>
+    window.onload = () => {
+      // Explosão inicial de confetes
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+
+      const duration = 3 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          return;
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        confetti(
+          Object.assign({}, defaults, {
+            particleCount,
+            origin: {
+              x: Math.random(),
+              y: Math.random() - 0.2,
+            },
+          })
+        );
+      }, 250);
+    };
+  </script>
 </body>
 </html>
