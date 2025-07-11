@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teste Grátis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-900 to-indigo-900 flex items-center justify-center min-h-screen px-4">
+  <div class="bg-purple-950 bg-opacity-60 p-6 sm:p-8 rounded-2xl shadow-lg w-full max-w-md text-white">
+    <h1 class="text-2xl sm:text-3xl font-bold text-center text-purple-400 mb-4">TESTE GRÁTIS</h1>
+    <p class="text-center text-sm sm:text-base mb-6">FORMULÁRIO DE PREENCHIMENTO</p>
+
+    <div class="bg-purple-800 bg-opacity-40 p-3 sm:p-4 rounded-lg mb-6 text-center font-medium text-sm sm:text-base">
+      TH AGENCY TECNOLOGY
+    </div>
+
+    <!-- Formulário com integração Formspree -->
+    <form
+      action="https://formspree.io/f/mdkzqpyr"
+      method="POST"
+      class="space-y-5"
+    >
+      <div>
+        <label for="nome" class="block text-sm font-semibold mb-1">👤 NOME COMPLETO</label>
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          placeholder="Digite seu nome"
+          required
+          class="w-full px-4 py-2 rounded-lg bg-purple-900 bg-opacity-60 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-purple-500"
+        />
+      </div>
+
+      <div>
+        <label for="whatsapp" class="block text-sm font-semibold mb-1">📱 NÚMERO DE WHATSAPP</label>
+        <div class="flex flex-col sm:flex-row">
+          <select
+            name="pais"
+            class="bg-purple-900 bg-opacity-60 text-white px-3 py-2 rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none outline-none"
+          >
+            <option value="+55">BR (+55)</option>
+            <option value="+1">EUA (+1)</option>
+            <!-- outros países se quiser -->
+          </select>
+          <input
+            type="tel"
+            id="whatsapp"
+            name="whatsapp"
+            placeholder="Digite seu número com DDD"
+            required
+            class="flex-1 px-4 py-2 bg-purple-900 bg-opacity-60 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-purple-500 rounded-b-lg sm:rounded-r-lg sm:rounded-bl-none"
+            maxlength="15"
+          />
+        </div>
+      </div>
+
+      <p class="text-xs text-purple-300"></p>
+
+      <!-- Redirecionar para página de obrigado após envio -->
+      <input
+        type="hidden"
+        name="_redirect"
+        value="https://seusite.com/obrigado.html"
+      />
+
+      <button
+        type="submit"
+        class="w-full mt-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-xl text-white font-semibold transition"
+      >
+        ENVIAR
+      </button>
+    </form>
+  </div>
+
+  <script>
+    const inputTelefone = document.getElementById('whatsapp');
+
+    inputTelefone.addEventListener('input', function (e) {
+      let valor = e.target.value;
+
+      // Remove tudo que não for número
+      valor = valor.replace(/\D/g, '');
+
+      // Formatação: (XX) XXXXX-XXXX
+      if (valor.length > 11) valor = valor.slice(0, 11);
+
+      if (valor.length > 6) {
+        valor =
+          '(' +
+          valor.substring(0, 2) +
+          ') ' +
+          valor.substring(2, 7) +
+          '-' +
+          valor.substring(7);
+      } else if (valor.length > 2) {
+        valor = '(' + valor.substring(0, 2) + ') ' + valor.substring(2);
+      } else if (valor.length > 0) {
+        valor = '(' + valor;
+      }
+
+      e.target.value = valor;
+    });
+  </script>
+</body>
+</html>
