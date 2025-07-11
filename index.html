@@ -12,15 +12,11 @@
     <p class="text-center text-sm sm:text-base mb-6">FORMULÁRIO DE PREENCHIMENTO</p>
 
     <div class="bg-purple-800 bg-opacity-40 p-3 sm:p-4 rounded-lg mb-6 text-center font-medium text-sm sm:text-base">
-      TH AGENCY TECNOLOGY V1
+      TH AGENCY TECNOLOGY
     </div>
 
-    <!-- Formulário com integração Formspree e redirecionamento -->
-    <form
-      action="https://formspree.io/f/mdkzqpyr?redirect=https://lucasfloper.github.io/newsite/obrigado.html"
-      method="POST"
-      class="space-y-5"
-    >
+    <!-- Formulário com JS -->
+    <form id="meuFormulario" method="POST" class="space-y-5">
       <div>
         <label for="nome" class="block text-sm font-semibold mb-1">👤 NOME COMPLETO</label>
         <input
@@ -42,7 +38,6 @@
           >
             <option value="+55">BR (+55)</option>
             <option value="+1">EUA (+1)</option>
-            <!-- outros países se quiser -->
           </select>
           <input
             type="tel"
@@ -67,33 +62,45 @@
     </form>
   </div>
 
+  <!-- Máscara para telefone -->
   <script>
     const inputTelefone = document.getElementById('whatsapp');
 
     inputTelefone.addEventListener('input', function (e) {
       let valor = e.target.value;
-
-      // Remove tudo que não for número
       valor = valor.replace(/\D/g, '');
-
-      // Formatação: (XX) XXXXX-XXXX
       if (valor.length > 11) valor = valor.slice(0, 11);
-
       if (valor.length > 6) {
-        valor =
-          '(' +
-          valor.substring(0, 2) +
-          ') ' +
-          valor.substring(2, 7) +
-          '-' +
-          valor.substring(7);
+        valor = '(' + valor.substring(0, 2) + ') ' + valor.substring(2, 7) + '-' + valor.substring(7);
       } else if (valor.length > 2) {
         valor = '(' + valor.substring(0, 2) + ') ' + valor.substring(2);
       } else if (valor.length > 0) {
         valor = '(' + valor;
       }
-
       e.target.value = valor;
+    });
+  </script>
+
+  <!-- Envio com JS e redirecionamento -->
+  <script>
+    const form = document.getElementById("meuFormulario");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      const response = await fetch("https://formspree.io/f/mdkzqpyr", {
+        method: "POST",
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        window.location.href = "https://lucasfloper.github.io/newsite/obrigado.html";
+      } else {
+        alert("Ocorreu um erro ao enviar. Tente novamente.");
+      }
     });
   </script>
 </body>
